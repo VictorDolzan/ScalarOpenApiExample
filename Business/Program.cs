@@ -1,5 +1,6 @@
 using AspNetCore.Scalar;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,35 +9,48 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
+    c.EnableAnnotations();
+    c.ExampleFilters(); 
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "My API",
+        Title = "Scalar Open API",
         Version = "v1",
         Description = "A sample API with Scalar OpenAPI documentation",
         Contact = new OpenApiContact
         {
-            Name = "Your Name",
-            Email = "your.email@example.com"
+            Name = "Victor Dolsan",
+            Email = "victorddf5@gmail.com",
         }
     });
+    
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 });
+
+builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 
 var app = builder.Build();
 
-// Enable Swagger JSON generation
-app.UseSwagger(c =>
-{
-    c.SerializeAsV2 = false; // Use OpenAPI v3
-});
+app.UseHttpsRedirection();
+
+app.UseSwagger();
 
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    c.RoutePrefix = "swagger";
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Scalar Open API V1");
+    c.RoutePrefix = "swagger"; // serve Swagger UI at /swagger
 });
 
-app.UseScalar(c => { c.RoutePrefix = "scalar"; });
-
 app.MapControllers();
-app.UseHttpsRedirection();
+app.UseScalar(options =>
+{
+    options.DocumentTitle = "💻Scalar Open API";
+    options.RoutePrefix = "scalar";
+    //switch themes
+    // options.UseTheme(Theme.Default); 
+    options.UseTheme(Theme.DeepSpace);
+    // options.UseTheme(Theme.Moon);
+});
+
 app.Run();
