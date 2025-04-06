@@ -16,4 +16,10 @@ public class AuthenticationController : ControllerBase
     {
         return Ok(new { message = "Health checked!" });
     }
+
+    [HttpDelete("DeleteUser")]
+    public IActionResult DeleteUser()
+    {
+        return Ok(new { message = "User deleted!" });
+    }
 }

@@ -29,7 +29,6 @@ app.UseSwagger(c =>
     c.SerializeAsV2 = false; // Use OpenAPI v3
 });
 
-
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
