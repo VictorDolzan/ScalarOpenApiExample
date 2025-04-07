@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen(c =>
     c.ExampleFilters(); 
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Scalar Open API",
+        Title = "💻Scalar Open API",
         Version = "v1",
         Description = "A sample API with Scalar OpenAPI documentation",
         Contact = new OpenApiContact
@@ -49,7 +49,7 @@ app.UseScalar(options =>
     options.RoutePrefix = "scalar";
     //switch themes
     // options.UseTheme(Theme.Default); 
-    options.UseTheme(Theme.DeepSpace);
+    options.UseTheme(Theme.Kepler);
     // options.UseTheme(Theme.Moon);
 });
 

@@ -19,7 +19,7 @@ public class DepartmentController : ControllerBase
     )]
     [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetDepartment()
+    public IActionResult GetDepartment([FromBody] int departmentId)
     {
         return Ok(new { message = "Department returned" });
     }
